@@ -56,6 +56,16 @@ thelist: list of strings<br />
 **Returns:**<br />
 list
 
+### osPathFromString( spath)
+Returns filesystem specific path from a string
+
+**Required**<br />
+spath: string - regardless of platform, the path should be POSIX style. So on Windows it would be `/C:/Path/to/video/source`<br />
+**Optional**<br />
+sep: string (default '/') - if you want to use a different separator for the input string<br />
+**Returns:**<br />
+os path object
+
 ### readFile( filename )
 Reads a file (full path required). The type of data returned will depend on the file read.  Apologies that the returned values for this one don't conform to the standard where the loglines are returned second. It's too much of a hassle to change it now.
 
