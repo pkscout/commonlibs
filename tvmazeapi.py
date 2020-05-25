@@ -1,4 +1,4 @@
-#v.0.1.0
+#v.0.2.0
 
 from resources.lib.url import URL
 JSONURL = URL( 'json' )
