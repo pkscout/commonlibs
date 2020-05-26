@@ -1,4 +1,4 @@
-#v.0.2.0
+#v.0.3.0
 
 from resources.lib.url import URL
 JSONURL = URL( 'json' )
@@ -33,6 +33,10 @@ class TVMaze( object ):
 
     def unTagShow( self, show, tag, params=None ):
         return self._call( 'tags/%s/shows/%s' % (tag, show), params, auth=True, type='delete' )
+
+
+    def getTags( self, params=None ):
+        return self._call( 'tags', params, auth=True )
 
 
     def _call( self, url_end, params, auth=False, type="get" ):
