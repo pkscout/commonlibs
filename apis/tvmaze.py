@@ -1,8 +1,8 @@
-#v.0.3.0
+#v.0.3.1
 
-from resources.lib.url import URL
-JSONURL = URL( 'json' )
-TXTURL = URL()
+from . import url
+JSONURL = url.URL( 'json' )
+TXTURL = url.URL()
 
 
 class TVMaze( object ):

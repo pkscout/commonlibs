@@ -1,8 +1,8 @@
-#v.0.1.0
+#v.0.1.1
 
-from resources.lib.url import URL
+from . import url
 
-JSONURL = URL( 'json' )
+JSONURL = url.URL( 'json' )
 
 
 
