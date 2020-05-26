@@ -1,11 +1,11 @@
-#v.0.3.1
+#v.0.3.2
 
 from . import url
 JSONURL = url.URL( 'json' )
 TXTURL = url.URL()
 
 
-class TVMaze( object ):
+class API( object ):
 
     def __init__( self, user='', apikey='' ):
         self.PUBLICURL = 'https://api.tvmaze.com'

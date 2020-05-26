@@ -1,4 +1,4 @@
-#v.0.1.1
+#v.0.1.2
 
 from . import url
 
@@ -6,7 +6,7 @@ JSONURL = url.URL( 'json' )
 
 
 
-class NextPVRAPI( object ):
+class API( object ):
 
     def __init__( self, dvr_host, dvr_port, dvr_auth ):
         url_end = 'services/service'
