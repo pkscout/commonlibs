@@ -1,4 +1,4 @@
-#v.0.4.0
+#v.0.4.1
 
 import socket
 import requests as _requests
@@ -37,7 +37,7 @@ class URL( object ):
         urldata = ''
         try:
             if urltype == "get":
-                urldata = _requests.get( url, params=params, timeout=self.timeout )
+                urldata = _requests.get( url, params=params, headers=self.headers, timeout=self.timeout )
             elif urltype == "post":
                 urldata = _requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
             elif urltype == "put":
