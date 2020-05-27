@@ -1,4 +1,4 @@
-#v.0.5.0
+#v.0.5.1
 
 import socket
 import requests as _requests
@@ -34,13 +34,13 @@ class URL( object ):
         auth, params, thedata = self._unpack_args( kwargs )
         try:
             if urltype == "get":
-                urldata = _requests.get( theurl, params=params, headers=self.HEADERS, auth=auth, timeout=self.TIMEOUT )
+                urldata = _requests.get( theurl, auth=auth, params=params, headers=self.HEADERS, timeout=self.TIMEOUT )
             elif urltype == "post":
-                urldata = _requests.post( theurl, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
+                urldata = _requests.post( theurl, auth=auth, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
             elif urltype == "put":
-                urldata = _requests.put( theurl, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
+                urldata = _requests.put( theurl, auth=auth, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
             elif urltype == "delete":
-                urldata = _requests.delete( theurl, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
+                urldata = _requests.delete( theurl, auth=auth, params=params, data=thedata, headers=self.HEADERS, timeout=self.TIMEOUT )
             loglines.append( "the url is: " + urldata.url )
             loglines.append( 'the params are: ')
             loglines.append( params )
