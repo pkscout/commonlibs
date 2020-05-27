@@ -1,4 +1,4 @@
-#v.0.3.0
+#v.0.4.0
 
 import socket
 import requests as _requests
@@ -22,6 +22,11 @@ class URL( object ):
         return self._urlcall( url, params, data, 'post' )
 
 
+    def Put( self, url, **kwargs ):
+        params, data = self._unpack_args( kwargs )
+        return self._urlcall( url, params, data, 'put' )
+
+
     def Delete( self, url, **kwargs ):
         params, data = self._unpack_args( kwargs )
         return self._urlcall( url, params, data, 'delete' )
@@ -35,6 +40,8 @@ class URL( object ):
                 urldata = _requests.get( url, params=params, timeout=self.timeout )
             elif urltype == "post":
                 urldata = _requests.post( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
+            elif urltype == "put":
+                urldata = _requests.put( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
             elif urltype == "delete":
                 urldata = _requests.delete( url, params=params, data=data, headers=self.headers, timeout=self.timeout )
             loglines.append( "the url is: " + urldata.url )
