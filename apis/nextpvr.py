@@ -1,4 +1,4 @@
-#v.0.1.2
+#v.0.1.3
 
 from . import url
 
@@ -24,13 +24,13 @@ class API( object ):
         return self._do_call( params )
 
 
-    def getRecordingList( self, recording_id='', filter='' ):
+    def getRecordingList( self, recording_id='', thefilter='' ):
         params = self.PARAMS
         params['method'] = 'recording.list'
         if recording_id:
             params['recording_id'] = recording_id
         elif filter:
-            params['filter'] = filter
+            params['filter'] = thefilter
         else:
             params['filter'] = 'all'
         return self._do_call( params )
@@ -42,7 +42,9 @@ class API( object ):
         return self._do_call( params )
 
 
-    def scheduleNewRecurringRecording( self, name, params={} ):
+    def scheduleNewRecurringRecording( self, name, params=None ):
+        if not params:
+            params = {}
         loglines = []
         success, t_loglines, results = self.searchForEpisode( name )
         loglines.extend( t_loglines )
