@@ -1,4 +1,4 @@
-#v.0.3.3
+#v.0.3.4
 
 import json
 from . import url
@@ -71,11 +71,11 @@ class API( object ):
         else:
             url_base = self.PUBLICURL
         theurl = '%s/%s' % (url_base, url_end )
-        if type == 'get':
+        if thetype == 'get':
             status, j_loglines, results = JSONURL.Get( theurl, auth=auth, params=params )
-        if type == 'put':
+        if thetype == 'put':
             status, j_loglines, results = JSONURL.Put( theurl,auth=auth, params=params, data=data )
-        if type == 'delete':
+        if thetype == 'delete':
             status, j_loglines, results = TXTURL.Delete( theurl, auth=auth, params=params )
         loglines.extend( j_loglines )
         return status == 200, loglines, results
