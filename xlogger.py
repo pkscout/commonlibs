@@ -1,4 +1,4 @@
-#v.0.4.5
+#v.0.4.6
 
 try:
     from kodi_six import xbmc
@@ -17,7 +17,7 @@ class Logger( object ):
             checkdir = os.sep.join( logfile.split(os.sep)[:-1] )
             if not checkdir == 'logfile.log':
                 if not os.path.exists( checkdir ):
-                    os.mkdir( checkdir )
+                    os.makedirs( checkdir )
             self.logger = logging.getLogger( logname )
             self.logger.setLevel( logging.DEBUG )
             if logconfig == 'timed':
