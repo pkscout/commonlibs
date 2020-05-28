@@ -1,4 +1,4 @@
-#v.0.5.2
+#v.0.5.3
 
 import socket
 import requests as _requests
@@ -6,6 +6,7 @@ import requests as _requests
 class URL( object ):
 
     def __init__( self, returntype='text', headers='', timeout=10 ):
+        """Creates a Requests wrapper object."""
         self.TIMEOUT = timeout
         self.HEADERS = headers
         self.RETURNTYPE = returntype

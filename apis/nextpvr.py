@@ -1,4 +1,4 @@
-#v.0.1.3
+#v.0.1.4
 
 from . import url
 
@@ -9,6 +9,7 @@ JSONURL = url.URL( 'json' )
 class API( object ):
 
     def __init__( self, dvr_host, dvr_port, dvr_auth ):
+        """Creates NextPVR API object."""
         url_end = 'services/service'
         self.BASEURL = 'http://%s:%s/%s' % (dvr_host, dvr_port, url_end)
         self.PINCODE = dvr_auth
