@@ -13,7 +13,7 @@ TXTURL = url.URL()
 class API( object ):
 
     def __init__( self, user='', apikey='' ):
-        """create a TV Maze API object."""
+        """Create a TV Maze API object."""
         self.PUBLICURL = 'https://api.tvmaze.com'
         self.USER = user
         self.APIKEY = apikey
