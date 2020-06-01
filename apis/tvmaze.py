@@ -1,4 +1,4 @@
-#v.0.4.1
+#v.0.5.0
 
 import json
 from . import url
@@ -61,8 +61,16 @@ class API( object ):
         return self._call( 'episodes/%s' % episodeid, params, data=json.dumps( payload ), thetype='put', auth=True )
 
 
-    def unTagShow( self, show, tag, params=None ):
-        return self._call( 'tags/%s/shows/%s' % (tag, show), params, auth=True, thetype='delete' )
+    def tagShow( self, showid, tagid, params=None ):
+        return self._call( 'tags/%s/shows/%s' % (tagid, showid), params, auth=True, thetype='put' )
+
+
+    def unTagShow( self, showid, tagid, params=None ):
+        return self._call( 'tags/%s/shows/%s' % (tagid, showid), params, auth=True, thetype='delete' )
+
+
+    def unFollowShow( self, showid, params=None ):
+        return self._call( 'follows/shows/%s' % showid, params, thetype='delete', auth=True )
 
 
     def _call( self, url_end, params, data=None, auth=False, thetype="get" ):
