@@ -1,4 +1,4 @@
-#v.0.5.1
+#v.0.5.2
 
 import json
 from . import url

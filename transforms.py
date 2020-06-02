@@ -1,4 +1,4 @@
-#v.0.3.2
+#v.0.3.3
 
 import imghdr, re
 

@@ -1,4 +1,4 @@
-#v.0.3.3
+#v.0.3.4
 
 from kodi_six import xbmc, xbmcaddon
 
