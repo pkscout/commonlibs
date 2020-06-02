@@ -1,4 +1,4 @@
-#v.0.5.0
+#v.0.5.1
 
 import json
 from . import url
@@ -57,6 +57,8 @@ class API( object ):
 
 
     def markEpisode( self, episodeid, marked_as=0, marked_at=0, params=None ):
+        if marked_as == -1:
+            return self._call( 'episodes/%s' % episodeid, params, thetype='delete', auth=True )
         payload = {'episode_id':0, 'type':marked_as, 'marked_at':marked_at }
         return self._call( 'episodes/%s' % episodeid, params, data=json.dumps( payload ), thetype='put', auth=True )
 
