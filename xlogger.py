@@ -1,4 +1,4 @@
-#v.0.4.10
+#v.0.4.11
 
 try:
     from kodi_six import xbmc
@@ -46,9 +46,7 @@ class Logger( object ):
                 loglevel = self.logger.debug
         for line in loglines:
             try:
-                if type(line).__name__=='unicode':
-                    line = line.encode('utf-8')
-                str_line = line.__str__()
+                str_line = line.encode('utf-8').__str__()
             except Exception as e:
                 str_line = ''
                 self._output( 'error parsing logline', loglevel )
