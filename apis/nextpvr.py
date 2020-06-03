@@ -1,4 +1,4 @@
-#v.0.1.5
+#v.0.1.6
 
 from . import url
 
@@ -8,11 +8,12 @@ JSONURL = url.URL( 'json' )
 
 class API( object ):
 
-    def __init__( self, dvr_host, dvr_port, dvr_auth ):
+    def __init__( self, dvr_host, dvr_port, dvr_auth, device ):
         """Creates NextPVR API object."""
         url_end = 'services/service'
         self.BASEURL = 'http://%s:%s/%s' % (dvr_host, dvr_port, url_end)
         self.PINCODE = dvr_auth
+        self.DEVICE = device
         self.PARAMS = {}
         self.PARAMS['format'] = 'json'
         self.PARAMS['sid'] = ''
@@ -66,6 +67,7 @@ class API( object ):
                 loglines.append( 'no match between listing %s and name %s' % (listings.get( 'name' ), name) )
         return False, loglines, []
 
+
     def _do_call( self, params ):
         loglines = []
         if not params['sid']:
@@ -86,7 +88,7 @@ class API( object ):
         params = { 'format':'json' }
         params['method'] = 'session.initiate'
         params['ver'] = '1.0'
-        params['device'] = 'tvmaze.integration'
+        params['device'] = self.DEVICE
         success, loglines, keys = JSONURL.Get( self.BASEURL, params=params )
         if success:
             sid = keys['sid']
