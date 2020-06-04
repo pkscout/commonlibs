@@ -1,4 +1,4 @@
-#v.0.1.6
+#v.0.2.0
 
 from . import url
 
@@ -26,6 +26,12 @@ class API( object ):
         return self._do_call( params )
 
 
+    def getChannelList( self ):
+        params = self.PARAMS
+        params['method'] = 'channel.list'
+        return self._do_call( params )
+
+
     def getRecordingList( self, recording_id='', thefilter='' ):
         params = self.PARAMS
         params['method'] = 'recording.list'
@@ -41,6 +47,12 @@ class API( object ):
     def getScheduledRecordings( self ):
         params = self.PARAMS
         params['method'] = 'recording.recurring.list'
+        return self._do_call( params )
+
+
+    def getSystemStatus( self ):
+        params = self.PARAMS
+        params['method'] = 'system.status'
         return self._do_call( params )
 
 
