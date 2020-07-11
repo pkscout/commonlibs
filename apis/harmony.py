@@ -1,4 +1,4 @@
-# 0.1.0
+# 0.1.1
 
 import json, websocket
 from . import url
@@ -63,7 +63,7 @@ class HubControl:
         self._init_vars()
         self.LOGLINES.append( 'the activity passed in is %s' % activity )
         activities = self._get_activities()
-        activity_id = activities.get( activity, {} ).get( 'id', '' )
+        activity_id = activities.get( activity.strip(), {} ).get( 'id', '' )
         self.LOGLINES.append( 'the activity id is %s' % activity_id )
         if not activity_id:
             return None
@@ -153,7 +153,7 @@ class HubControl:
             except IndexError:
                 device = ''
                 button = ''
-            cmd = self.COMMANDS.get( device, {} ).get( button, 'pause' )
+            cmd = self.COMMANDS.get( device.strip(), {} ).get( button.strip(), 'pause' )
             cmds.append( cmd )
         self.LOGLINES.extend( ['returning cmds of:', cmds] )
         return cmds
