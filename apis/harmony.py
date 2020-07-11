@@ -1,4 +1,4 @@
-# 0.1.1
+# 0.1.2
 
 import json, websocket
 from . import url
@@ -45,7 +45,7 @@ class HubControl:
                     if MONITOR.waitForAbort( self.DELAY ):
                         return []
                 else:
-                    time.sleep( 0.25 )
+                    time.sleep( self.DELAY )
                 continue
             hub_cmd = {}
             hub_cmd['cmd'] = 'vnd.logitech.harmony/vnd.logitech.harmony.engine?holdAction'
