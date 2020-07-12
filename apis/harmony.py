@@ -1,4 +1,4 @@
-# 0.1.2
+# 0.1.3
 
 import json, websocket
 from . import url
@@ -13,10 +13,10 @@ except:
 
 class HubControl:
 
-    def __init__( self, hub_ip, thetimeout=30, delay=0.25 ):
+    def __init__( self, hub_ip, thetimeout=30, delay=250 ):
         self.HUBIP = hub_ip
         self.TIMEOUT = thetimeout
-        self.DELAY = delay
+        self.DELAY = delay / 1000
         self.HUBID = ''
         self.CONFIG = {}
         self.COMMANDS = {}
@@ -43,7 +43,7 @@ class HubControl:
             if r_cmd == 'pause':
                 if MONITOR:
                     if MONITOR.waitForAbort( self.DELAY ):
-                        return []
+                        return [], self.LOGLINES
                 else:
                     time.sleep( self.DELAY )
                 continue
