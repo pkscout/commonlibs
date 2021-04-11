@@ -1,14 +1,13 @@
-#v.0.2.0
+# v.0.2.0
 
 from . import url
 
-JSONURL = url.URL( 'json' )
+JSONURL = url.URL('json')
 
 
+class API(object):
 
-class API( object ):
-
-    def __init__( self, dvr_host, dvr_port, dvr_auth, device ):
+    def __init__(self, dvr_host, dvr_port, dvr_auth, device):
         """Creates NextPVR API object."""
         url_end = 'services/service'
         self.BASEURL = 'http://%s:%s/%s' % (dvr_host, dvr_port, url_end)
@@ -18,21 +17,18 @@ class API( object ):
         self.PARAMS['format'] = 'json'
         self.PARAMS['sid'] = ''
 
-
-    def searchForEpisode( self, name ):
+    def searchForEpisode(self, name):
         params = self.PARAMS
         params['method'] = 'channel.listings.search'
         params['title'] = name
-        return self._do_call( params )
+        return self._do_call(params)
 
-
-    def getChannelList( self ):
+    def getChannelList(self):
         params = self.PARAMS
         params['method'] = 'channel.list'
-        return self._do_call( params )
+        return self._do_call(params)
 
-
-    def getRecordingList( self, recording_id='', thefilter='' ):
+    def getRecordingList(self, recording_id='', thefilter=''):
         params = self.PARAMS
         params['method'] = 'recording.list'
         if recording_id:
@@ -41,89 +37,87 @@ class API( object ):
             params['filter'] = thefilter
         else:
             params['filter'] = 'all'
-        return self._do_call( params )
+        return self._do_call(params)
 
-
-    def getScheduledRecordings( self ):
+    def getScheduledRecordings(self):
         params = self.PARAMS
         params['method'] = 'recording.recurring.list'
-        return self._do_call( params )
+        return self._do_call(params)
 
-
-    def getSystemStatus( self ):
+    def getSystemStatus(self):
         params = self.PARAMS
         params['method'] = 'system.status'
-        return self._do_call( params )
+        return self._do_call(params)
 
-
-    def scheduleNewRecurringRecording( self, name, params=None ):
+    def scheduleNewRecurringRecording(self, name, params=None):
         if not params:
             params = {}
         loglines = []
-        success, t_loglines, results = self.searchForEpisode( name )
-        loglines.extend( t_loglines )
+        success, t_loglines, results = self.searchForEpisode(name)
+        loglines.extend(t_loglines)
         if not success:
-            loglines.append( 'no listings found for %s, skipping' % name )
+            loglines.append('no listings found for %s, skipping' % name)
             return False, loglines, []
-        listings = results.get( 'listings', [] )
-        params.update( self.PARAMS )
+        listings = results.get('listings', [])
+        params.update(self.PARAMS)
         params['method'] = 'recording.recurring.save'
         for listing in listings:
-            if listing.get( 'name' ) == name:
-                params['event_id'] = listing.get( 'id' )
-                loglines.append( 'found matching listing for %s' % name )
-                success, t_loglines, results = JSONURL.Get( self.BASEURL, params=params )
-                loglines.extend( t_loglines )
+            if listing.get('name') == name:
+                params['event_id'] = listing.get('id')
+                loglines.append('found matching listing for %s' % name)
+                success, t_loglines, results = JSONURL.Get(
+                    self.BASEURL, params=params)
+                loglines.extend(t_loglines)
                 return True, loglines, results
             else:
-                loglines.append( 'no match between listing %s and name %s' % (listings.get( 'name' ), name) )
+                loglines.append('no match between listing %s and name %s' % (
+                    listings.get('name'), name))
         return False, loglines, []
 
-
-    def _do_call( self, params ):
+    def _do_call(self, params):
         loglines = []
         if not params['sid']:
             success, t_loglines = self._login()
-            loglines.extend( t_loglines )
+            loglines.extend(t_loglines)
             if not success:
                 return False, loglines, []
             params['sid'] = self.PARAMS['sid']
-        success, t_loglines, results = JSONURL.Get( self.BASEURL, params=params )
-        loglines.extend( t_loglines )
+        success, t_loglines, results = JSONURL.Get(self.BASEURL, params=params)
+        loglines.extend(t_loglines)
         if success and results:
             return success, loglines, results
         else:
             return False, loglines, []
 
-
-    def _login( self ):
-        params = { 'format':'json' }
+    def _login(self):
+        params = {'format': 'json'}
         params['method'] = 'session.initiate'
         params['ver'] = '1.0'
         params['device'] = self.DEVICE
-        success, loglines, keys = JSONURL.Get( self.BASEURL, params=params )
+        success, loglines, keys = JSONURL.Get(self.BASEURL, params=params)
         if success:
             sid = keys['sid']
             salt = keys['salt']
-            params = { 'format':'json' }
+            params = {'format': 'json'}
             params['sid'] = sid
             params['method'] = 'session.login'
-            params['md5'] = self._hash_me( ':' + self._hash_me( self.PINCODE ) + ':' + salt )
-            success, a_loglines, login = JSONURL.Get( self.BASEURL, params=params )
-            loglines.extend( a_loglines )
+            params['md5'] = self._hash_me(
+                ':' + self._hash_me(self.PINCODE) + ':' + salt)
+            success, a_loglines, login = JSONURL.Get(
+                self.BASEURL, params=params)
+            loglines.extend(a_loglines)
             if success and login['stat'] == 'ok':
                 self.PARAMS['sid'] = login['sid']
                 return True, loglines
             else:
-                loglines.append( 'unable to login' )
+                loglines.append('unable to login')
                 return False, loglines
         else:
-            loglines.append( 'unable to login' )
+            loglines.append('unable to login')
             return False, loglines
 
-
-    def _hash_me ( self, thedata ):
+    def _hash_me(self, thedata):
         import hashlib
         h = hashlib.md5()
-        h.update( thedata.encode( 'utf-8' ) )
+        h.update(thedata.encode('utf-8'))
         return h.hexdigest()
